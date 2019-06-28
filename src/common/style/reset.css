@@ -1,7 +1,11 @@
-*{
-  padding: 0px;
-  margin: 0px;
-}
-ul,ol{
-  list-style: none;
-}
+@charset "utf-8";
+body,ol,ul,li,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select,figure{margin:0;padding:0}
+ul,ol,li{list-style:none;}
+html,body{height:100%;}
+*{box-sizing:border-box;}
+a {text-decoration:none;}
+img{display:block;border:0;}
+h1,h2,h3,h4,h5,h6{font-size: 16px;font-weight:normal;}
+input{border:0;outline:none;}
+body{font-family:"Times New Roman","微软雅黑";}
+.clear:after{content:".";clear:both;display:block;height:0;overflow:hidden;visibility:hidden;}
