@@ -34,7 +34,7 @@
                 <p v-for="(item,index) of history"
                     :key = index
                     @click="search2(item)"
-                >{{item}}</p>
+                >{{item}} <span @click="clearHistory"> × </span> </p>
             </div>
         </div>
     </div>
@@ -58,7 +58,25 @@ export default {
     },
     methods: {
         search2(item){
-            
+            this.restaurantList = []
+            let value = item;
+            let reg = new RegExp(value,'g');
+            console.log(reg)
+            for (let index = 0; index < this.allList.length; index++) {
+                const element = this.allList[index];
+                if(reg.test(element.name)){
+                    this.restaurantList.push(element)
+                }
+                
+            }
+            this.state1 = false;
+            console.log( this.restaurantList)
+            if( this.restaurantList.length == 0){
+                this.state = false;
+            }else{
+                this.state = true;
+            }
+            Storage.set('name',value)
         },
         back(){
             this.$router.go(-1);
@@ -104,7 +122,7 @@ export default {
         }
     },
     mounted() {
-        new BS('.showBox')
+        new BS('.showBox',{click:true})
         this.initListData()
         this.getHistory()
     },

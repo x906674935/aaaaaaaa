@@ -1,7 +1,7 @@
 <template>
     <div class="detail">
         <div class="head">
-            <span class="back"> back </span>
+            <span class="back" @click="back"> back </span>
             <span>{{foodList.name}}</span>
         </div>
         <div class="content">
@@ -28,6 +28,9 @@ export default {
         }
     },
     methods: {
+        back(){
+            this.$router.go(-1)
+        },
         initFoodData(){
             Axios.get('https://elm.cangdu.org/shopping/v2/menu?restaurant_id=1')
             .then((res)=>{
