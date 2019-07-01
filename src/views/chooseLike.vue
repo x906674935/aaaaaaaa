@@ -1,7 +1,7 @@
 <template>
     <div class="chooseLike">
         <div class="head">
-            <span>back</span>
+            <span @click="back">back</span>
             <span>订单备注</span>
             <span>完成</span>
         </div>
@@ -23,7 +23,19 @@
 </template>
 <script>
 export default {
-    
+    data() {
+        return {
+            
+        }
+    },
+    methods: {
+        back(){
+            this.$router.go(-1)
+        }
+    },
+    mounted() {
+        
+    },
 }
 </script>
 <style lang="less" scoped>

@@ -25,6 +25,8 @@ export default {
         return {
             foodList : [],
             imgsrc : '//elm.cangdu.org/img/',
+            restuarantid : 3269,
+            foodid : 1667
         }
     },
     methods: {
@@ -32,14 +34,25 @@ export default {
             this.$router.go(-1)
         },
         initFoodData(){
-            Axios.get('https://elm.cangdu.org/shopping/v2/menu?restaurant_id=1')
+            Axios.get(`https://elm.cangdu.org/shopping/v2/menu?restaurant_id=${this.restuarantid}`)
             .then((res)=>{
                 console.log(res)
-                this.foodList = res[0].foods[1]
+                //this.foodList = res[0].foods[1]
                 console.log( this.foodList)
+                for (let index = 0; index < res.length; index++) {
+                   for (let k = 0; k < res[index].foods; k++) {
+                       if(res[index].foods[k].item_id == this.foodid)
+                        this.foodList = res[index].foods[k]
+                   }
+                    
+                }
             })
         }
     },
+    // created() {
+    //     this.restuarantid = this.$route.query.shopid
+    //     this.foodid = this,$route.query.address
+    // },
     mounted() {
         this.initFoodData()
     },

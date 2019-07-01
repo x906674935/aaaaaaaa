@@ -52,7 +52,7 @@
         </div>
         <div class="confirm">
             <span class="waitpay">待支付 ￥{{totalprice}}</span>
-            <span class="confirmpay">确认下单</span>
+            <span @click="confirmpay" class="confirmpay">确认下单</span>
         </div>
     </div>
 </template>
@@ -76,6 +76,10 @@ export default {
         }
     },
     methods: {
+        confirmpay(){
+            alert('下单成功')
+            Storage.remove(this.shopid)
+        },
         back(){
             this.$router.go(-1)
         },
