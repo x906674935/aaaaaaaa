@@ -36,25 +36,28 @@ export default {
         initFoodData(){
             Axios.get(`https://elm.cangdu.org/shopping/v2/menu?restaurant_id=${this.restuarantid}`)
             .then((res)=>{
-                console.log(res)
+                
                 //this.foodList = res[0].foods[1]
-                console.log( this.foodList)
+                
                 for (let index = 0; index < res.length; index++) {
-                   for (let k = 0; k < res[index].foods; k++) {
+                   for (let k = 0; k < res[index].foods.length; k++) {
                        if(res[index].foods[k].item_id == this.foodid)
                         this.foodList = res[index].foods[k]
                    }
                     
                 }
+              
             })
         }
     },
-    // created() {
-    //     this.restuarantid = this.$route.query.shopid
-    //     this.foodid = this,$route.query.address
-    // },
+    created() {
+        this.restuarantid = this.$route.query.shopId
+        this.foodid = this.$route.query.address
+        
+    },
     mounted() {
         this.initFoodData()
+      
     },
 }
 </script>
@@ -65,6 +68,8 @@ export default {
      .top(0);
      .bottom(0);
      .w(375);
+     z-index:2;
+     background:white;
      .head{
          .w(375);
          .h(46);

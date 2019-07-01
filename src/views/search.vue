@@ -14,7 +14,7 @@
             <ul v-if="state">
                 <li v-for="(item,index) of restaurantList"
                 :key="index"
-                @click="goRestaurant"
+                @click="goRestaurant(item)"
                 >
                     
                         <img :src="imgsrc+item.image_path" alt="">
@@ -42,9 +42,7 @@
 <script>
 import BS from 'better-scroll';
 import Axios from 'utils/axios';
-import Env from 'config/env';
-import MUtils from 'config/mUtils';
-import Storage from 'config/localStorage'
+import Storage from 'utils/localStorage'
 export default {
     data() {
         return {
@@ -53,7 +51,8 @@ export default {
             imgsrc : '//elm.cangdu.org/img/',
             state : true,
             state1 : true,
-            history : []
+            history:[],
+            id : []
         }
     },
     methods: {
@@ -81,8 +80,9 @@ export default {
         back(){
             this.$router.go(-1);
         },
-        goRestaurant(){
-            this.$router.push({path : '/restaurant'})
+        goRestaurant(item){
+            console.log(item)
+            this.$router.push({path : '/goodsList',query:{id:item.id}})
         },
         search(){
             this.restaurantList = []

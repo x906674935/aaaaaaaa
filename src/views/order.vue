@@ -54,16 +54,17 @@
             <span class="waitpay">待支付 ￥{{totalprice}}</span>
             <span @click="confirmpay" class="confirmpay">确认下单</span>
         </div>
+        <router-view></router-view>
     </div>
 </template>
 <script>
 import BS from 'better-scroll';
-import Storage from 'config/localStorage';
+import Storage from 'utils/localStorage';
 import Axios from 'axios';
 export default {
     data() {
         return {
-            shopid : 3269,
+            shopid : null,
             allData : [],
             arriveTime :'',
             goods : {},
@@ -85,24 +86,31 @@ export default {
         },
         chooseLike(){
             console.log(1)
-            this.$router.push('/chooselike')
+            this.$router.push('/goodsList/order/chooselike')
         },
         getaddr(){
             this.address = Storage.get('site');
             
         },
         getGoods(){
+            this.shopid = this.$route.query.shopId
             this.goods = Storage.get(this.shopid)
             console.log(this.goods)
+
         },
         goodsDetails(){
+            console.log(this.goods)
             for (const key in this.goods) {
                 this.goodname.push(key)
-                for (const i in this.goods[key]) {
-                    this.goodnum.push(this.goods[key][i])
-                    this.totalprice += i*this.goods[key][i]
-                    this.goodprice.push(i*this.goods[key][i])
+                
+                    for (const i in this.goods[key]) {
+                        if(i !== "id"){
+                        this.goodnum.push(this.goods[key][i])
+                        this.totalprice += i*this.goods[key][i]
+                        this.goodprice.push(i*this.goods[key][i])
+                        }
                 }
+                
             }
             
         },
@@ -123,11 +131,14 @@ export default {
             this.arriveTime = `${a}:${b}`
         }
     },
+    created() {
+        
+    },
     mounted() {
         new BS('.orderDetailBox',{click:true})
         this.getTime()
         this.initAllData()
-        Storage.set(3269,{1231:{20:1},12221:{20:2},'were':{20:1}})
+        // Storage.set(3269,{1231:{20:1},12221:{20:2},'were':{20:1}})
         Storage.set('site',{"city":"北京科技职业技术学院","door":"13012345678"} )
         this.getGoods()
         this.goodsDetails()

@@ -1,11 +1,8 @@
 <template>
   <div id="app">
-<<<<<<< HEAD
-    <goodsList></goodsList>
-=======
+    <!-- <goodsList></goodsList> -->
  
     <router-view></router-view>
->>>>>>> origin/jiang
   </div>
 </template>
 

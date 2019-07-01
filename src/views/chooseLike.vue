@@ -43,6 +43,8 @@ export default {
 .chooseLike{
     position: fixed;
     .top(0);
+    background: white;
+    z-index:3;
     .bottom(0);
     .w(375);
     .head{

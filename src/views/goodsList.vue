@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div class="xie_head">
+        
         <span class = "active">商品</span>
         <span @click = "discuss">评价</span>
     </div>
@@ -76,7 +77,9 @@
             </div>
         </div>
     </div>
+    <router-view></router-view>
   </div>
+  
 </template>
 
 <script>
@@ -89,12 +92,14 @@ export default {
             choose:0,
             id:null,
             cartShow : false,
-            priceAll:0
+            priceAll:0,
+            getId : null
+            
         }
     },
     computed: {
         category(){
-            return this.goodsListInfo.data
+            return this.goodsListInfo
         },
         cartInfo(){
             let obj =  JSON.parse(localStorage.getItem(this.id));
@@ -118,7 +123,9 @@ export default {
         // console.log(this.$refs);
         
     },
-    
+    created() {
+        this.getId = this.$route.query.id
+    },
     methods: {
         ...mapMutations({changeCart : 'ShoppingCart/changeCart'}),
         discuss(){
@@ -142,12 +149,12 @@ export default {
             this.cartShow = !this.cartShow;
         },
         goDetail(address){
-            this.$router.push({path:"detail",query:{address,shopId:this.id}})
+            this.$router.push({path:"/goodsList/detail",query:{address,shopId:this.id}})
             // console.log(address)
         },
         goClear(){
             if(this.priceAll > 0){
-                this.$router.push({path:"order",query:{shopId:this.id}})
+                this.$router.push({path:"/goodsList/order",query:{shopId:this.id}})
             }else{
                 alert("请先选择商品后结算")
             }
@@ -250,19 +257,19 @@ export default {
             return calculationHeight;
         },
         getInfo(){
-          this.$axios.get('https://elm.cangdu.org/shopping/v2/menu?restaurant_id=3269').then((res)=>{
-            // console.log(res);
+          this.$axios.get(`https://elm.cangdu.org/shopping/v2/menu?restaurant_id=${this.getId}`).then((res)=>{
             this.goodsListInfo = res;
-            if(localStorage.getItem("3269")){
-                this.changeCart(JSON.parse(localStorage.getItem("3269")));
+            // console.log(res);
+            if(localStorage.getItem(this.getId)){
+                this.changeCart(JSON.parse(localStorage.getItem(this.getId)));
                 this.$nextTick(()=>{
-                    this.renderList(JSON.parse(localStorage.getItem("3269")));
+                    this.renderList(JSON.parse(localStorage.getItem(this.getId)));
                 })
             }else{
-                localStorage.setItem("3269",'');
+                localStorage.setItem(this.getId,'');
             }
 
-            this.id = '3269';     
+            this.id = this.getId;     
       })}
   }
 }
