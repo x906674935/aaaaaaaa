@@ -24,5 +24,6 @@ module.exports={
     .set('pages',resolve('./src/pages'))
     .set('swiper',resolve('./node_modules/swiper'))
     .set('views',resolve('./src/views'))
+    .set('store',resolve('./src/store'))
   }
 }
